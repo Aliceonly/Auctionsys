@@ -74,7 +74,7 @@ contract EcommerceStore_chenjunjie {
         return true;
     }
 
-    function bidcheck_chenjunjie(uint _productId, string memory _amount, string memory _secretkey) public {
+    function bidcheck(uint _productId, string memory _amount, string memory _secretkey) public {
         ProductInfo_chenjunjie storage product = stores_chenjunjie[productIdInStore_chenjunjie[_productId]][_productId];
         require(block.timestamp >= product.auctionEndTime, "Auction did not end yet");
         bytes32 sealedBid = keccak256(abi.encodePacked(_amount, _secretkey));
@@ -111,6 +111,7 @@ contract EcommerceStore_chenjunjie {
         }
         product.bids[msg.sender][sealedBid].reveal_status = true;
     }
+
     function stringToUint(string memory s) private pure returns(uint) {
         bytes memory b = (bytes(s));
         uint result = 0;
@@ -120,5 +121,15 @@ contract EcommerceStore_chenjunjie {
             }
         }
         return result;
+    }
+
+    function highestBidderDetails(uint _productId) public view returns(address, uint, uint) {
+        ProductInfo_chenjunjie storage product = stores_chenjunjie[productIdInStore_chenjunjie[_productId]][_productId];
+        return (product.highestBidder, product.highestBid, product.secondHighestBid);
+    }
+
+    function totalBids(uint _productId) public view returns(uint) {
+        ProductInfo_chenjunjie storage product = stores_chenjunjie[productIdInStore_chenjunjie[_productId]][_productId];
+        return product.totalBids;
     }
 }
