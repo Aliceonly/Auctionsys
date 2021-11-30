@@ -59,8 +59,8 @@ contract EcommerceStore_chenjunjie {
     function getProduct(uint _productId) view public returns (uint, string memory, string memory, string memory, string memory,
     uint, uint, uint, ProductStatus_chenjunjie, ProductCondition_chenjunjie) {
         ProductInfo_chenjunjie storage product = stores_chenjunjie[productIdInStore_chenjunjie[_productId]][_productId];
-        return (product.id, product.name, product.category, product.imageLink, product.descLink, product.auctionStartTime,
-            product.auctionEndTime, product.startPrice, product.status, product.condition);
+        return (product.id, product.name, product.category, product.imageLink, product.descLink,
+        product.auctionStartTime, product.auctionEndTime, product.startPrice, product.status, product.condition);
     }
 
     function bid(uint _productId, bytes32 _bid) payable public returns(bool) {
