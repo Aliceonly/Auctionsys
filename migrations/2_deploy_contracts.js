@@ -1,5 +1,6 @@
-var EcommerceStore_chenjunjie = artifacts.require("./EcommerceStore_chenjunjie.sol");
+var auction_chenjunjie = artifacts.require("./auction_chenjunjie.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(EcommerceStore_chenjunjie);
+
+  deployer.deploy(auction_chenjunjie);
 };

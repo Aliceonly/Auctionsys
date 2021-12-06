@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLISENSED
 pragma solidity ^0.8.0;
 
-contract EcommerceStore_chenjunjie {
+contract auction_chenjunjie {
     enum ProductStatus_chenjunjie { Open, Sold, Notsold }
     enum ProductCondition_chenjunjie { New, Old }
 
@@ -13,8 +13,6 @@ contract EcommerceStore_chenjunjie {
         uint id;
         string name;
         string category;
-        string imageLink;
-        string descLink;
         uint auctionStartTime;
         uint auctionEndTime;
         uint startPrice;
@@ -38,7 +36,7 @@ contract EcommerceStore_chenjunjie {
         productIndex_chenjunjie = 0;
     }
 
-    function addProductToStore(string memory _name, string memory _category, string memory _imageLink, string memory _descLink,
+    function addProductToStore(string memory _name, string memory _category,
     uint _auctionStartTime,uint _auctionEndTime, uint _startPrice, uint _productCondition) public {
         require(_auctionStartTime < _auctionEndTime, "Auction start time must be earlier than the end time");
         productIndex_chenjunjie += 1;
@@ -46,8 +44,6 @@ contract EcommerceStore_chenjunjie {
         product.id = productIndex_chenjunjie;
         product.name = _name;
         product.category = _category;
-        product.imageLink = _imageLink;
-        product.descLink = _descLink;
         product.auctionStartTime = _auctionStartTime;
         product.auctionEndTime = _auctionEndTime;
         product.startPrice = _startPrice;
@@ -56,11 +52,11 @@ contract EcommerceStore_chenjunjie {
         productIdInStore_chenjunjie[productIndex_chenjunjie] = msg.sender;
     }
 
-    function getProduct(uint _productId) view public returns (uint, string memory, string memory, string memory, string memory,
+    function getProduct(uint _productId) view public returns (uint, string memory, string memory,
     uint, uint, uint, ProductStatus_chenjunjie, ProductCondition_chenjunjie) {
         ProductInfo_chenjunjie storage product = stores_chenjunjie[productIdInStore_chenjunjie[_productId]][_productId];
-        return (product.id, product.name, product.category, product.imageLink, product.descLink,
-        product.auctionStartTime, product.auctionEndTime, product.startPrice, product.status, product.condition);
+        return (product.id, product.name, product.category, product.auctionStartTime,
+         product.auctionEndTime, product.startPrice, product.status, product.condition);
     }
 
     function bid(uint _productId, bytes32 _bid) payable public returns(bool) {
